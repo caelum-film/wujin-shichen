@@ -41,6 +41,7 @@ export function TopBar() {
       </div>
       <nav className="mx-auto flex max-w-3xl flex-wrap gap-x-4 px-5 pb-2 text-sm">
         <NavLink to="/night">长夜</NavLink>
+        <NavLink to="/yi">易</NavLink>
         <NavLink to="/city">城志</NavLink>
         <NavLink to="/ferry">渡口</NavLink>
         <NavLink to="/people">街上的人</NavLink>
@@ -49,7 +50,7 @@ export function TopBar() {
   );
 }
 
-function NavLink({ to, children }: { to: "/night" | "/city" | "/ferry" | "/people"; children: string }) {
+function NavLink({ to, children }: { to: "/night" | "/yi" | "/city" | "/ferry" | "/people"; children: string }) {
   return (
     <Link
       to={to}

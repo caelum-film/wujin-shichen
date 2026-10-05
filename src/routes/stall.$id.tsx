@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { stallById, type StallId } from "@/lib/wujin/content";
 import { useJournal, useJournalReady } from "@/lib/wujin/store";
 import { BackToStreet, Shell } from "@/components/wujin/chrome";
+import { tidalByStall, hexGlyph } from "@/lib/wujin/yijing";
 import { Ritual } from "@/components/wujin/rituals";
 
 export const Route = createFileRoute("/stall/$id")({
@@ -38,6 +39,14 @@ function StallPage() {
         {stall.branch}时 · {stall.hours}
       </p>
       <h1 className="mt-2 font-serif text-4xl font-semibold">{stall.name}</h1>
+      {tidalByStall(stall.id) ? (
+        <p className="mt-3 text-sm text-lantern">
+          <span className="mr-2 font-serif text-2xl" aria-hidden>
+            {hexGlyph(tidalByStall(stall.id)!.hex)}
+          </span>
+          消息卦 · {tidalByStall(stall.id)?.name} · {tidalByStall(stall.id)?.motion}
+        </p>
+      ) : null}
       <p className="mt-3 max-w-xl leading-relaxed text-paper/80">{stall.ritual}</p>
       <NightNote stallId={stall.id} name={stall.name} />
       <div className="mt-8">

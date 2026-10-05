@@ -4,6 +4,7 @@ import { stalls } from "@/lib/wujin/content";
 import { hourIds, streetTalk } from "@/lib/wujin/chronicle";
 import { useJournal, useJournalReady } from "@/lib/wujin/store";
 import { branchIndex } from "@/lib/wujin/time";
+import { tidalByStall } from "@/lib/wujin/yijing";
 import { cn, Shell } from "@/components/wujin/chrome";
 
 export const Route = createFileRoute("/")({
@@ -31,7 +32,7 @@ function Home() {
       <p className="text-sm text-lantern">一座不在地图上的江城</p>
       <h1 className="mt-2 font-serif text-4xl font-semibold leading-tight">十二时铺</h1>
       <p className="mt-4 max-w-xl text-base leading-relaxed text-paper/80">
-        雾津按十二个时辰开门。铺子里的小事会变成夜笺；夜笺攒起来，会翻开一篇叫《未寄出的名字》的长夜。城里的人、城志和渡口，都跟着你的足迹慢慢肯说话。
+        雾津按十二个时辰开门。铺子里的小事会变成夜笺；夜笺攒起来，会翻开一篇叫《未寄出的名字》的长夜。十二辰也是一条潮：阳从子时复生，亥时交还给地。
       </p>
 
       <p className="mt-4 max-w-xl font-serif text-lg leading-relaxed text-lantern">
@@ -127,7 +128,11 @@ function Home() {
                       {on ? " · 此刻营业" : ""}
                     </p>
                     <h2 className="mt-1 font-serif text-2xl">{stall.name}</h2>
-                    <p className="mt-2 text-sm leading-relaxed text-paper/80">{stall.blurb}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-paper/80">
+                      {tidalByStall(stall.id)
+                        ? `${tidalByStall(stall.id)?.name} · ${stall.blurb}`
+                        : stall.blurb}
+                    </p>
                     {visited.has(stall.id) ? (
                       <p className="mt-2 text-sm text-cinnabar">这一辰已留笺，长夜翻开了</p>
                     ) : null}

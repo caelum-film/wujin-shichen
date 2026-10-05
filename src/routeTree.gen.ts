@@ -16,6 +16,7 @@ import { Route as JournalRouteImport } from './routes/journal'
 import { Route as NightRouteImport } from './routes/night'
 import { Route as PeopleRouteImport } from './routes/people'
 import { Route as RunRouteImport } from './routes/run'
+import { Route as YiRouteImport } from './routes/yi'
 import { Route as PeopleIdRouteImport } from './routes/people.$id'
 import { Route as StallIdRouteImport } from './routes/stall.$id'
 
@@ -54,6 +55,11 @@ const RunRoute = RunRouteImport.update({
   path: '/run',
   getParentRoute: () => rootRouteImport,
 } as any)
+const YiRoute = YiRouteImport.update({
+  id: '/yi',
+  path: '/yi',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PeopleIdRoute = PeopleIdRouteImport.update({
   id: '/$id',
   path: '/$id',
@@ -73,6 +79,7 @@ export interface FileRoutesByFullPath {
   '/night': typeof NightRoute
   '/people': typeof PeopleRouteWithChildren
   '/run': typeof RunRoute
+  '/yi': typeof YiRoute
   '/people/$id': typeof PeopleIdRoute
   '/stall/$id': typeof StallIdRoute
 }
@@ -84,6 +91,7 @@ export interface FileRoutesByTo {
   '/night': typeof NightRoute
   '/people': typeof PeopleRouteWithChildren
   '/run': typeof RunRoute
+  '/yi': typeof YiRoute
   '/people/$id': typeof PeopleIdRoute
   '/stall/$id': typeof StallIdRoute
 }
@@ -96,6 +104,7 @@ export interface FileRoutesById {
   '/night': typeof NightRoute
   '/people': typeof PeopleRouteWithChildren
   '/run': typeof RunRoute
+  '/yi': typeof YiRoute
   '/people/$id': typeof PeopleIdRoute
   '/stall/$id': typeof StallIdRoute
 }
@@ -109,6 +118,7 @@ export interface FileRouteTypes {
     | '/night'
     | '/people'
     | '/run'
+    | '/yi'
     | '/people/$id'
     | '/stall/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -120,6 +130,7 @@ export interface FileRouteTypes {
     | '/night'
     | '/people'
     | '/run'
+    | '/yi'
     | '/people/$id'
     | '/stall/$id'
   id:
@@ -131,6 +142,7 @@ export interface FileRouteTypes {
     | '/night'
     | '/people'
     | '/run'
+    | '/yi'
     | '/people/$id'
     | '/stall/$id'
   fileRoutesById: FileRoutesById
@@ -143,6 +155,7 @@ export interface RootRouteChildren {
   NightRoute: typeof NightRoute
   PeopleRoute: typeof PeopleRouteWithChildren
   RunRoute: typeof RunRoute
+  YiRoute: typeof YiRoute
   StallIdRoute: typeof StallIdRoute
 }
 
@@ -197,6 +210,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RunRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/yi': {
+      id: '/yi'
+      path: '/yi'
+      fullPath: '/yi'
+      preLoaderRoute: typeof YiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/people/$id': {
       id: '/people/$id'
       path: '/$id'
@@ -233,6 +253,7 @@ const rootRouteChildren: RootRouteChildren = {
   NightRoute: NightRoute,
   PeopleRoute: PeopleRouteWithChildren,
   RunRoute: RunRoute,
+  YiRoute: YiRoute,
   StallIdRoute: StallIdRoute,
 }
 export const routeTree = rootRouteImport
