@@ -6,6 +6,7 @@ import { tidal } from "./yijing.ts";
 test("sixty-four unique hexagrams", () => {
   assert.equal(hexagrams.length, 64);
   assert.equal(new Set(hexagrams.map((item) => item.lines)).size, 64);
+  assert.ok(hexagrams.every((item) => item.text && item.image));
   assert.equal(new Set(hexagrams.map((item) => item.n)).size, 64);
 });
 

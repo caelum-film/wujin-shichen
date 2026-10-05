@@ -74,6 +74,14 @@ function CastPage() {
             下{trigramName(cast.primary.lower)}上{trigramName(cast.primary.upper)}
           </p>
           <p className="mt-4 font-serif text-xl leading-relaxed">{cast.primary.text}</p>
+          <p className="mt-3 leading-relaxed text-ink/80">{cast.primary.image}</p>
+          <Link
+            to="/yi/book"
+            search={{ n: cast.primary.n }}
+            className="mt-4 inline-flex min-h-11 items-center text-sm text-cinnabar"
+          >
+            在六十四卦里翻到这一卦
+          </Link>
           {cast.moving.length > 0 ? (
             <p className="mt-4 text-sm leading-relaxed text-cinnabar">
               第{cast.moving.map((index) => index + 1).join("、")}爻在动。变过去的那一卦，城下一回才肯说完。

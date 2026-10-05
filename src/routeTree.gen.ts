@@ -19,6 +19,7 @@ import { Route as RunRouteImport } from './routes/run'
 import { Route as YiRouteImport } from './routes/yi'
 import { Route as PeopleIdRouteImport } from './routes/people.$id'
 import { Route as StallIdRouteImport } from './routes/stall.$id'
+import { Route as YiBookRouteImport } from './routes/yi_.book'
 import { Route as YiCastRouteImport } from './routes/yi_.cast'
 
 const IndexRoute = IndexRouteImport.update({
@@ -71,6 +72,11 @@ const StallIdRoute = StallIdRouteImport.update({
   path: '/stall/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const YiBookRoute = YiBookRouteImport.update({
+  id: '/yi_/book',
+  path: '/yi/book',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const YiCastRoute = YiCastRouteImport.update({
   id: '/yi_/cast',
   path: '/yi/cast',
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/yi': typeof YiRoute
   '/people/$id': typeof PeopleIdRoute
   '/stall/$id': typeof StallIdRoute
+  '/yi/book': typeof YiBookRoute
   '/yi/cast': typeof YiCastRoute
 }
 export interface FileRoutesByTo {
@@ -101,6 +108,7 @@ export interface FileRoutesByTo {
   '/yi': typeof YiRoute
   '/people/$id': typeof PeopleIdRoute
   '/stall/$id': typeof StallIdRoute
+  '/yi/book': typeof YiBookRoute
   '/yi/cast': typeof YiCastRoute
 }
 export interface FileRoutesById {
@@ -115,6 +123,7 @@ export interface FileRoutesById {
   '/yi': typeof YiRoute
   '/people/$id': typeof PeopleIdRoute
   '/stall/$id': typeof StallIdRoute
+  '/yi_/book': typeof YiBookRoute
   '/yi_/cast': typeof YiCastRoute
 }
 export interface FileRouteTypes {
@@ -130,6 +139,7 @@ export interface FileRouteTypes {
     | '/yi'
     | '/people/$id'
     | '/stall/$id'
+    | '/yi/book'
     | '/yi/cast'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -143,6 +153,7 @@ export interface FileRouteTypes {
     | '/yi'
     | '/people/$id'
     | '/stall/$id'
+    | '/yi/book'
     | '/yi/cast'
   id:
     | '__root__'
@@ -156,6 +167,7 @@ export interface FileRouteTypes {
     | '/yi'
     | '/people/$id'
     | '/stall/$id'
+    | '/yi_/book'
     | '/yi_/cast'
   fileRoutesById: FileRoutesById
 }
@@ -169,6 +181,7 @@ export interface RootRouteChildren {
   RunRoute: typeof RunRoute
   YiRoute: typeof YiRoute
   StallIdRoute: typeof StallIdRoute
+  YiBookRoute: typeof YiBookRoute
   YiCastRoute: typeof YiCastRoute
 }
 
@@ -244,6 +257,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StallIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/yi_/book': {
+      id: '/yi_/book'
+      path: '/yi/book'
+      fullPath: '/yi/book'
+      preLoaderRoute: typeof YiBookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/yi_/cast': {
       id: '/yi_/cast'
       path: '/yi/cast'
@@ -275,6 +295,7 @@ const rootRouteChildren: RootRouteChildren = {
   RunRoute: RunRoute,
   YiRoute: YiRoute,
   StallIdRoute: StallIdRoute,
+  YiBookRoute: YiBookRoute,
   YiCastRoute: YiCastRoute,
 }
 export const routeTree = rootRouteImport

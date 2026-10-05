@@ -17,12 +17,20 @@ function YiPage() {
       <p className="mt-3 max-w-xl leading-relaxed text-paper/80">
         八卦住在雾津的八处地方。十二个时辰则是一条更慢的潮：阳从子时复生，到巳时站满，午时遇见第一笔阴，亥时重新交给地。这不是课本，是阿迟的名字在城里走过的路线。
       </p>
-      <Link
-        to="/yi/cast"
-        className="mt-6 inline-flex min-h-11 items-center rounded-full bg-cinnabar px-5 text-sm font-medium text-paper"
-      >
-        问江起卦
-      </Link>
+      <div className="mt-6 flex flex-wrap gap-3">
+        <Link
+          to="/yi/cast"
+          className="inline-flex min-h-11 items-center rounded-full bg-cinnabar px-5 text-sm font-medium text-paper"
+        >
+          问江起卦
+        </Link>
+        <Link
+          to="/yi/book"
+          className="inline-flex min-h-11 items-center rounded-full border border-paper/30 px-5 text-sm text-paper"
+        >
+          翻六十四卦
+        </Link>
+      </div>
 
       <h2 className="mt-10 font-serif text-2xl">八卦住在哪里</h2>
       <ul className="mt-4 grid gap-3 sm:grid-cols-2">
