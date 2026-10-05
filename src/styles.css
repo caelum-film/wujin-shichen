@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Noto Serif SC", "Songti SC", "STSong", "WenQuanYi Zen Hei", serif;
+  --font-sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "WenQuanYi Zen Hei",
+    sans-serif;
+
+  --color-ink: #141210;
+  --color-paper: #f3ead8;
+  --color-cinnabar: #c44536;
+  --color-lantern: #e4a15a;
+  --color-river: #1e2a3a;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: var(--color-cinnabar);
+    color: var(--color-paper);
+  }
+}
+
+@keyframes ember {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.ember {
+  animation: ember 1.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ember {
+    animation: none;
+  }
+}
