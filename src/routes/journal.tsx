@@ -69,7 +69,7 @@ function JournalPage() {
         <div className="mt-8 rounded-2xl bg-paper p-5 text-ink">
           <p className="font-serif text-xl">这一页还是空白的。</p>
           <p className="mt-3 leading-relaxed">
-            雾津不催你。先去一个时辰里坐坐，回来时这里会有纸。
+            雾津不催你。先去一个时辰里坐坐，或去问一次江。回来时这里会有纸。
           </p>
           <Link
             to="/"

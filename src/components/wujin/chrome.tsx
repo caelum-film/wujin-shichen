@@ -39,7 +39,7 @@ export function TopBar() {
           夜记{ready && count > 0 ? ` · ${count}` : ""}
         </Link>
       </div>
-      <nav className="mx-auto flex max-w-3xl flex-wrap gap-x-4 px-5 pb-2 text-sm">
+      <nav className="mx-auto flex max-w-3xl gap-x-4 overflow-x-auto px-5 pb-1 text-sm [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <NavLink to="/night">长夜</NavLink>
         <NavLink to="/yi">易</NavLink>
         <NavLink to="/city">城志</NavLink>
@@ -54,7 +54,7 @@ function NavLink({ to, children }: { to: "/night" | "/yi" | "/city" | "/ferry" |
   return (
     <Link
       to={to}
-      className="inline-flex min-h-11 items-center text-paper/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lantern"
+      className="inline-flex min-h-11 shrink-0 items-center text-paper/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lantern"
     >
       {children}
     </Link>

@@ -37,12 +37,20 @@ function VoyagePage() {
       <p className="mt-3 max-w-xl leading-relaxed text-paper/80">
         阿迟走过的地方，你再走一遍。每一次只选一边。阳在左，阴在右。走到城门，卦就齐了。
       </p>
-      <ol className="mt-8 space-y-2">
-        {bits.map((bit, index) => (
-          <li key={steps[index]?.place} className="text-sm text-paper/75">
-            {steps[index]?.place} · {bit === "1" ? steps[index]?.yang : steps[index]?.yin}
-          </li>
-        ))}
+      <ol className="mt-8 space-y-2" aria-label="已走过的爻">
+        {Array.from({ length: 6 }, (_, index) => {
+          const place = 6 - index;
+          const bit = bits[place - 1];
+          return (
+            <li key={place} className="flex items-center gap-3">
+              <span className="w-4 text-sm text-paper/45">{place}</span>
+              {bit ? <Bar bit={bit} /> : <span className="h-3 flex-1 rounded bg-paper/10" />}
+              <span className="w-28 text-right text-sm text-paper/60">
+                {bit ? (bit === "1" ? steps[place - 1]?.yang : steps[place - 1]?.yin) : steps[place - 1]?.place}
+              </span>
+            </li>
+          );
+        })}
       </ol>
       {step ? (
         <div className="mt-6">
@@ -100,6 +108,16 @@ function VoyagePage() {
         </article>
       ) : null}
     </Shell>
+  );
+}
+
+function Bar({ bit }: { bit: string }) {
+  if (bit === "1") return <span className="h-3 flex-1 bg-paper" />;
+  return (
+    <span className="flex flex-1 gap-2">
+      <span className="h-3 flex-1 bg-paper" />
+      <span className="h-3 flex-1 bg-paper" />
+    </span>
   );
 }
 

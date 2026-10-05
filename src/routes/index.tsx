@@ -65,6 +65,18 @@ function Home() {
         </Link>
       </div>
 
+      <p className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-sm">
+        <Link to="/yi" className="inline-flex min-h-11 items-center text-lantern">
+          八卦与消息
+        </Link>
+        <Link to="/yi/cast" className="inline-flex min-h-11 items-center text-lantern">
+          问江
+        </Link>
+        <Link to="/yi/voyage" className="inline-flex min-h-11 items-center text-lantern">
+          夜航
+        </Link>
+      </p>
+
       <section className="mt-8 rounded-2xl border border-cinnabar bg-river p-5">
         <p className="text-sm text-lantern">你的此刻</p>
         {current ? (
