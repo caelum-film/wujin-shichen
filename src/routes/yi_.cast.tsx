@@ -71,7 +71,7 @@ function CastPage() {
             <span className="ml-2 text-lg text-ink/60">第 {cast.primary.n} 卦</span>
           </h2>
           <p className="mt-1 text-sm text-ink/60">
-            下{trigramName(cast.primary.lower)}上{trigramName(cast.primary.upper)}
+            本卦 · 下{trigramName(cast.primary.lower)}上{trigramName(cast.primary.upper)}
           </p>
           <p className="mt-4 font-serif text-xl leading-relaxed">{cast.primary.text}</p>
           <p className="mt-3 leading-relaxed text-ink/80">{cast.primary.image}</p>
@@ -82,12 +82,31 @@ function CastPage() {
           >
             在六十四卦里翻到这一卦
           </Link>
-          {cast.moving.length > 0 ? (
-            <p className="mt-4 text-sm leading-relaxed text-cinnabar">
-              第{cast.moving.map((index) => index + 1).join("、")}爻在动。变过去的那一卦，城下一回才肯说完。
-            </p>
-          ) : null}
         </article>
+      ) : null}
+      {cast?.changed ? (
+        <article className="mt-4 rounded-2xl border border-cinnabar bg-river p-5">
+          <p className="text-sm text-lantern">
+            之卦 · 第{cast.moving.map((index) => index + 1).join("、")}爻在动
+          </p>
+          <p className="mt-3 font-serif text-4xl leading-none text-lantern" aria-hidden>
+            {hexGlyph(cast.changed.n)}
+          </p>
+          <h2 className="mt-3 font-serif text-3xl">{cast.changed.name}</h2>
+          <p className="mt-4 leading-relaxed text-paper/85">
+            本卦是眼前这一步。老阴与老阳翻过去之后，夜走到「{cast.changed.name}」：{cast.changed.text}
+          </p>
+          <p className="mt-3 leading-relaxed text-paper/75">{cast.changed.image}</p>
+          <Link
+            to="/yi/book"
+            search={{ n: cast.changed.n }}
+            className="mt-4 inline-flex min-h-11 items-center text-sm text-lantern"
+          >
+            翻到变后的这一卦
+          </Link>
+        </article>
+      ) : cast?.primary ? (
+        <p className="mt-4 text-sm leading-relaxed text-paper/70">六爻都安静。这一卦不再往别处走。</p>
       ) : null}
     </Shell>
   );
