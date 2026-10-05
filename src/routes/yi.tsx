@@ -30,6 +30,12 @@ function YiPage() {
         >
           翻六十四卦
         </Link>
+        <Link
+          to="/yi/voyage"
+          className="inline-flex min-h-11 items-center rounded-full border border-paper/30 px-5 text-sm text-paper"
+        >
+          走一次夜航
+        </Link>
       </div>
 
       <h2 className="mt-10 font-serif text-2xl">八卦住在哪里</h2>

@@ -50,6 +50,11 @@ function JournalPage() {
               易 · 问江
             </FilterChip>
           ) : null}
+          {slips.some((slip) => slip.stallId === "voyage") ? (
+            <FilterChip on={filter === "voyage"} onClick={() => setFilter("voyage")}>
+              航 · 夜航
+            </FilterChip>
+          ) : null}
           {slips.some((slip) => slip.stallId === "run") ? (
             <FilterChip on={filter === "run"} onClick={() => setFilter("run")}>
               闰 · 拾遗
