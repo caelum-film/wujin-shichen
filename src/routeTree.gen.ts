@@ -10,7 +10,13 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CityRouteImport } from './routes/city'
+import { Route as FerryRouteImport } from './routes/ferry'
 import { Route as JournalRouteImport } from './routes/journal'
+import { Route as NightRouteImport } from './routes/night'
+import { Route as PeopleRouteImport } from './routes/people'
+import { Route as RunRouteImport } from './routes/run'
+import { Route as PeopleIdRouteImport } from './routes/people.$id'
 import { Route as StallIdRouteImport } from './routes/stall.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -18,10 +24,40 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CityRoute = CityRouteImport.update({
+  id: '/city',
+  path: '/city',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FerryRoute = FerryRouteImport.update({
+  id: '/ferry',
+  path: '/ferry',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const JournalRoute = JournalRouteImport.update({
   id: '/journal',
   path: '/journal',
   getParentRoute: () => rootRouteImport,
+} as any)
+const NightRoute = NightRouteImport.update({
+  id: '/night',
+  path: '/night',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PeopleRoute = PeopleRouteImport.update({
+  id: '/people',
+  path: '/people',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RunRoute = RunRouteImport.update({
+  id: '/run',
+  path: '/run',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PeopleIdRoute = PeopleIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => PeopleRoute,
 } as any)
 const StallIdRoute = StallIdRouteImport.update({
   id: '/stall/$id',
@@ -31,31 +67,82 @@ const StallIdRoute = StallIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/city': typeof CityRoute
+  '/ferry': typeof FerryRoute
   '/journal': typeof JournalRoute
+  '/night': typeof NightRoute
+  '/people': typeof PeopleRouteWithChildren
+  '/run': typeof RunRoute
+  '/people/$id': typeof PeopleIdRoute
   '/stall/$id': typeof StallIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/city': typeof CityRoute
+  '/ferry': typeof FerryRoute
   '/journal': typeof JournalRoute
+  '/night': typeof NightRoute
+  '/people': typeof PeopleRouteWithChildren
+  '/run': typeof RunRoute
+  '/people/$id': typeof PeopleIdRoute
   '/stall/$id': typeof StallIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/city': typeof CityRoute
+  '/ferry': typeof FerryRoute
   '/journal': typeof JournalRoute
+  '/night': typeof NightRoute
+  '/people': typeof PeopleRouteWithChildren
+  '/run': typeof RunRoute
+  '/people/$id': typeof PeopleIdRoute
   '/stall/$id': typeof StallIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/journal' | '/stall/$id'
+  fullPaths:
+    | '/'
+    | '/city'
+    | '/ferry'
+    | '/journal'
+    | '/night'
+    | '/people'
+    | '/run'
+    | '/people/$id'
+    | '/stall/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/journal' | '/stall/$id'
-  id: '__root__' | '/' | '/journal' | '/stall/$id'
+  to:
+    | '/'
+    | '/city'
+    | '/ferry'
+    | '/journal'
+    | '/night'
+    | '/people'
+    | '/run'
+    | '/people/$id'
+    | '/stall/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/city'
+    | '/ferry'
+    | '/journal'
+    | '/night'
+    | '/people'
+    | '/run'
+    | '/people/$id'
+    | '/stall/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CityRoute: typeof CityRoute
+  FerryRoute: typeof FerryRoute
   JournalRoute: typeof JournalRoute
+  NightRoute: typeof NightRoute
+  PeopleRoute: typeof PeopleRouteWithChildren
+  RunRoute: typeof RunRoute
   StallIdRoute: typeof StallIdRoute
 }
 
@@ -68,12 +155,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/city': {
+      id: '/city'
+      path: '/city'
+      fullPath: '/city'
+      preLoaderRoute: typeof CityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ferry': {
+      id: '/ferry'
+      path: '/ferry'
+      fullPath: '/ferry'
+      preLoaderRoute: typeof FerryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/journal': {
       id: '/journal'
       path: '/journal'
       fullPath: '/journal'
       preLoaderRoute: typeof JournalRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/night': {
+      id: '/night'
+      path: '/night'
+      fullPath: '/night'
+      preLoaderRoute: typeof NightRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/people': {
+      id: '/people'
+      path: '/people'
+      fullPath: '/people'
+      preLoaderRoute: typeof PeopleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/run': {
+      id: '/run'
+      path: '/run'
+      fullPath: '/run'
+      preLoaderRoute: typeof RunRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/people/$id': {
+      id: '/people/$id'
+      path: '/$id'
+      fullPath: '/people/$id'
+      preLoaderRoute: typeof PeopleIdRouteImport
+      parentRoute: typeof PeopleRoute
     }
     '/stall/$id': {
       id: '/stall/$id'
@@ -85,9 +214,25 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface PeopleRouteChildren {
+  PeopleIdRoute: typeof PeopleIdRoute
+}
+
+const PeopleRouteChildren: PeopleRouteChildren = {
+  PeopleIdRoute: PeopleIdRoute,
+}
+
+const PeopleRouteWithChildren =
+  PeopleRoute._addFileChildren(PeopleRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CityRoute: CityRoute,
+  FerryRoute: FerryRoute,
   JournalRoute: JournalRoute,
+  NightRoute: NightRoute,
+  PeopleRoute: PeopleRouteWithChildren,
+  RunRoute: RunRoute,
   StallIdRoute: StallIdRoute,
 }
 export const routeTree = rootRouteImport

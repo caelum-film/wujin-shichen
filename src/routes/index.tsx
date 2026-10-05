@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { stalls } from "@/lib/wujin/content";
+import { hourIds, streetTalk } from "@/lib/wujin/chronicle";
+import { useJournal, useJournalReady } from "@/lib/wujin/store";
 import { branchIndex } from "@/lib/wujin/time";
 import { cn, Shell } from "@/components/wujin/chrome";
 
@@ -10,6 +12,10 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   const [now, setNow] = useState<number | null>(null);
+  const ready = useJournalReady();
+  const slips = useJournal((s) => s.slips);
+  const visited = new Set(slips.map((slip) => slip.stallId));
+  const done = hourIds(visited);
 
   useEffect(() => {
     const tick = () => setNow(branchIndex(new Date()));
@@ -25,8 +31,33 @@ function Home() {
       <p className="text-sm text-lantern">一座不在地图上的江城</p>
       <h1 className="mt-2 font-serif text-4xl font-semibold leading-tight">十二时铺</h1>
       <p className="mt-4 max-w-xl text-base leading-relaxed text-paper/80">
-        雾津按十二个时辰开门。你可以从自己的此刻走进去，也可以去任何一间还亮着的铺子。每做完一件小事，城里会给你一张夜笺。
+        雾津按十二个时辰开门。铺子里的小事会变成夜笺；夜笺攒起来，会翻开一篇叫《未寄出的名字》的长夜。城里的人、城志和渡口，都跟着你的足迹慢慢肯说话。
       </p>
+
+      <p className="mt-4 max-w-xl font-serif text-lg leading-relaxed text-lantern">
+        {ready ? streetTalk(done.length) : "城里的风还在认你的袖口。"}
+      </p>
+
+      <div className="mt-6 grid gap-3 sm:grid-cols-2">
+        <Link
+          to="/night"
+          className="rounded-2xl border border-cinnabar bg-river p-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lantern"
+        >
+          <p className="text-sm text-lantern">长夜 · {ready ? `${done.length}/12` : "…"}</p>
+          <h2 className="mt-1 font-serif text-2xl">未寄出的名字</h2>
+          <p className="mt-2 text-sm leading-relaxed text-paper/75">阿迟投进潮里的字，正在十二个时辰里走路。</p>
+        </Link>
+        <Link
+          to="/run"
+          className="rounded-2xl border border-paper/20 bg-river p-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lantern"
+        >
+          <p className="text-sm text-lantern">
+            闰时 · {ready && done.length >= 4 ? "门开了" : `${ready ? done.length : 0}/4`}
+          </p>
+          <h2 className="mt-1 font-serif text-2xl">钟点之外</h2>
+          <p className="mt-2 text-sm leading-relaxed text-paper/75">走完四间铺，缝里会有东西等你送回去。</p>
+        </Link>
+      </div>
 
       <section className="mt-8 rounded-2xl border border-cinnabar bg-river p-5">
         <p className="text-sm text-lantern">你的此刻</p>
@@ -97,6 +128,9 @@ function Home() {
                     </p>
                     <h2 className="mt-1 font-serif text-2xl">{stall.name}</h2>
                     <p className="mt-2 text-sm leading-relaxed text-paper/80">{stall.blurb}</p>
+                    {visited.has(stall.id) ? (
+                      <p className="mt-2 text-sm text-cinnabar">这一辰已留笺，长夜翻开了</p>
+                    ) : null}
                   </div>
                   <span className="shrink-0 font-serif text-4xl text-lantern" aria-hidden>
                     {stall.branch}

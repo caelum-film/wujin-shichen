@@ -25,8 +25,11 @@ function JournalPage() {
       <p className="text-sm text-lantern">只存在于这台设备</p>
       <h1 className="mt-2 font-serif text-4xl font-semibold">夜记</h1>
       <p className="mt-3 max-w-xl leading-relaxed text-paper/75">
-        你在铺子里收下的句子都夹在这里。撕掉只影响这本册子，江还在。
+        你在铺子里收下的句子都夹在这里。它们也会被渡口重读，并决定长夜翻到第几页。撕掉只影响这本册子，江还在。
       </p>
+      <Link to="/night" className="mt-4 inline-flex min-h-11 items-center text-sm text-lantern">
+        去读长夜
+      </Link>
 
       {ready && used.length > 0 ? (
         <div className="mt-6 flex flex-wrap gap-2">
@@ -42,6 +45,11 @@ function JournalPage() {
               {stall.branch} · {stall.name}
             </FilterChip>
           ))}
+          {slips.some((slip) => slip.stallId === "run") ? (
+            <FilterChip on={filter === "run"} onClick={() => setFilter("run")}>
+              闰 · 拾遗
+            </FilterChip>
+          ) : null}
         </div>
       ) : null}
 
