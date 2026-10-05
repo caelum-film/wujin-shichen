@@ -6,6 +6,10 @@ import { useJournal, useJournalReady } from "@/lib/wujin/store";
 import { Shell } from "@/components/wujin/chrome";
 
 export const Route = createFileRoute("/yi_/cast")({
+  validateSearch: (search: Record<string, unknown>): { q?: string } => {
+    const q = typeof search.q === "string" ? search.q.slice(0, 80) : "";
+    return q ? { q } : {};
+  },
   component: CastPage,
   head: () => ({ meta: [{ title: "问江 · 雾津十二时" }] }),
 });
@@ -14,7 +18,8 @@ const coinFace = ["", "", "字", "背"];
 
 function CastPage() {
   const [lines, setLines] = useState<CastLine[]>([]);
-  const [question, setQuestion] = useState("");
+  const asked = Route.useSearch().q ?? "";
+  const [question, setQuestion] = useState(asked);
   const [saved, setSaved] = useState(false);
   const ready = useJournalReady();
   const slips = useJournal((s) => s.slips);

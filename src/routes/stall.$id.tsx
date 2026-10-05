@@ -3,6 +3,7 @@ import { stallById, type StallId } from "@/lib/wujin/content";
 import { useJournal, useJournalReady } from "@/lib/wujin/store";
 import { BackToStreet, Shell } from "@/components/wujin/chrome";
 import { tidalByStall, hexGlyph } from "@/lib/wujin/yijing";
+import { hexagramByNumber } from "@/lib/wujin/hexagrams";
 import { Ritual } from "@/components/wujin/rituals";
 
 export const Route = createFileRoute("/stall/$id")({
@@ -64,13 +65,34 @@ function NightNote({ stallId, name }: { stallId: string; name: string }) {
   if (!open) {
     return (
       <p className="mt-4 text-sm leading-relaxed text-paper/60">
-        做完{name}的这件小事，长夜会翻开对应的一页。
+        做完{name}的这件小事，长夜会翻开对应的一页，这一辰的消息卦也会把话说完。
       </p>
     );
   }
+  const tide = tidalByStall(stallId);
+  const hex = tide ? hexagramByNumber(tide.hex) : undefined;
   return (
-    <Link to="/night" className="mt-4 inline-flex min-h-11 items-center text-sm text-lantern">
-      这一辰已经写进长夜
-    </Link>
+    <div className="mt-4">
+      <Link to="/night" className="inline-flex min-h-11 items-center text-sm text-lantern">
+        这一辰已经写进长夜
+      </Link>
+      {hex ? (
+        <article className="mt-3 rounded-2xl bg-paper p-5 text-ink">
+          <p className="text-sm text-cinnabar">消息卦说完了</p>
+          <h2 className="mt-1 font-serif text-2xl">
+            {hexGlyph(hex.n)} {hex.name}
+          </h2>
+          <p className="mt-3 font-serif text-lg leading-relaxed">{hex.text}</p>
+          <p className="mt-3 leading-relaxed">{hex.image}</p>
+          <Link
+            to="/yi/cast"
+            search={{ q: `从${tide?.branch}时的${hex.name}再问一次` }}
+            className="mt-4 inline-flex min-h-11 items-center text-sm text-cinnabar"
+          >
+            带着这一辰去问江
+          </Link>
+        </article>
+      ) : null}
+    </div>
   );
 }
