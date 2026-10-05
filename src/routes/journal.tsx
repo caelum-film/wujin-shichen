@@ -31,7 +31,7 @@ function JournalPage() {
         去读长夜
       </Link>
 
-      {ready && used.length > 0 ? (
+      {ready && slips.length > 0 ? (
         <div className="mt-6 flex flex-wrap gap-2">
           <FilterChip on={filter === "all"} onClick={() => setFilter("all")}>
             全部
@@ -45,6 +45,11 @@ function JournalPage() {
               {stall.branch} · {stall.name}
             </FilterChip>
           ))}
+          {slips.some((slip) => slip.stallId === "yi") ? (
+            <FilterChip on={filter === "yi"} onClick={() => setFilter("yi")}>
+              易 · 问江
+            </FilterChip>
+          ) : null}
           {slips.some((slip) => slip.stallId === "run") ? (
             <FilterChip on={filter === "run"} onClick={() => setFilter("run")}>
               闰 · 拾遗

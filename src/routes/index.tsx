@@ -38,6 +38,11 @@ function Home() {
       <p className="mt-4 max-w-xl font-serif text-lg leading-relaxed text-lantern">
         {ready ? streetTalk(done.length) : "城里的风还在认你的袖口。"}
       </p>
+      {ready && slips.some((slip) => slip.stallId === "yi") ? (
+        <p className="mt-3 text-sm text-paper/75">
+          夜记里留着最近一问：{slips.find((slip) => slip.stallId === "yi")?.title}。渡口也会把这句话再读一遍。
+        </p>
+      ) : null}
 
       <div className="mt-6 grid gap-3 sm:grid-cols-2">
         <Link

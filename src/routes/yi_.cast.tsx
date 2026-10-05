@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { hexGlyph } from "@/lib/wujin/yijing";
 import { resolveCast, throwLine, trigramName, type CastLine } from "@/lib/wujin/hexagrams";
+import { useJournal, useJournalReady } from "@/lib/wujin/store";
 import { Shell } from "@/components/wujin/chrome";
 
 export const Route = createFileRoute("/yi_/cast")({
@@ -13,6 +14,12 @@ const coinFace = ["", "", "字", "背"];
 
 function CastPage() {
   const [lines, setLines] = useState<CastLine[]>([]);
+  const [question, setQuestion] = useState("");
+  const [saved, setSaved] = useState(false);
+  const ready = useJournalReady();
+  const slips = useJournal((s) => s.slips);
+  const addSlip = useJournal((s) => s.addSlip);
+  const latest = slips.find((slip) => slip.stallId !== "yi" && slip.stallId !== "run");
   const done = lines.length === 6;
   const cast = done ? resolveCast(lines.map((line) => line.value)) : null;
 
@@ -24,8 +31,31 @@ function CastPage() {
       <p className="mt-4 text-sm text-lantern">三枚铜钱，自下往上</p>
       <h1 className="mt-2 font-serif text-4xl font-semibold">问江</h1>
       <p className="mt-3 max-w-xl leading-relaxed text-paper/80">
-        字为阴，背为阳。六次之后，江给你一卦。先在心里放一句真正想问的事，不必写出来。城听得见停顿。
+        字为阴，背为阳。六次之后，江给你一卦。把要问的那一句写下来，或什么都不写。城听得见停顿。
       </p>
+      <label className="mt-6 block text-sm text-lantern" htmlFor="ask">
+        这一问
+      </label>
+      <textarea
+        id="ask"
+        value={question}
+        rows={3}
+        onChange={(event) => {
+          setQuestion(event.target.value);
+          setSaved(false);
+        }}
+        placeholder="例如：这个名字，还要不要再投一次"
+        className="mt-2 w-full rounded-xl border border-paper/20 bg-river px-4 py-3 text-paper placeholder:text-paper/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lantern"
+      />
+      {ready && latest && !question ? (
+        <button
+          type="button"
+          onClick={() => setQuestion(`沿夜笺「${latest.title}」再问一次`)}
+          className="mt-2 inline-flex min-h-11 items-center text-sm text-lantern"
+        >
+          用最近一张夜笺来问
+        </button>
+      ) : null}
 
       <ol className="mt-8 space-y-2">
         {Array.from({ length: 6 }, (_, index) => {
@@ -54,7 +84,10 @@ function CastPage() {
       {lines.length > 0 ? (
         <button
           type="button"
-          onClick={() => setLines([])}
+          onClick={() => {
+            setLines([]);
+            setSaved(false);
+          }}
           className="ml-3 inline-flex min-h-11 items-center text-sm text-paper/70"
         >
           重新问
@@ -107,6 +140,29 @@ function CastPage() {
         </article>
       ) : cast?.primary ? (
         <p className="mt-4 text-sm leading-relaxed text-paper/70">六爻都安静。这一卦不再往别处走。</p>
+      ) : null}
+      {cast?.primary ? (
+        <button
+          type="button"
+          disabled={saved}
+          onClick={() => {
+            const changed = cast.changed;
+            addSlip({
+              stallId: "yi",
+              branch: "易",
+              title: changed ? `问江 · ${cast.primary?.name}之${changed.name}` : `问江 · ${cast.primary?.name}`,
+              body: [
+                `问：${question.trim() || "没有写下来的那一句"}`,
+                `本卦${cast.primary?.name}：${cast.primary?.text}`,
+                changed ? `之卦${changed.name}：${changed.text}` : "六爻安静，不再往别处走。",
+              ].join("\n"),
+            });
+            setSaved(true);
+          }}
+          className="mt-4 inline-flex min-h-11 items-center rounded-full bg-cinnabar px-5 text-sm font-medium text-paper disabled:opacity-60"
+        >
+          {saved ? "已收入夜记" : "收入夜记"}
+        </button>
       ) : null}
     </Shell>
   );
